@@ -8,7 +8,7 @@ To contribute to this project off here are some prerequisites you’ll want to h
 1) Install Visual Studio 2022 (Community is free) https://visualstudio.microsoft.com/downloads/  or VSCode https://code.visualstudio.com/download 
 2) Install .NET 6.0.4 SDK and Runtime 6.0.9 https://dotnet.microsoft.com/en-us/download/dotnet/6.0 
 3) Install Node.js (for npm install) https://nodejs.org/en/ (NOTE: I’m on version 16.17.0 LTS if you are coding along or contributing I’d recommend being on the same) 
-4) Some experience with Angular 14+ (I have the most basic knowledge so we might learn together)
+4) Some experience with Razor Pages
 5) Some experience with the dotnet cli (again total noob here!)
 
 For Windows Users:
