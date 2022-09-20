@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmplSolutionsTech.Models.Identity;
+using System.Reflection.Emit;
 
 namespace SmplSolutionsTech.Data.Identity;
 
@@ -16,7 +17,6 @@ public class AppIdentityDbContext : IdentityDbContext<AppUser>
     {
         base.OnModelCreating(builder);
         builder.HasDefaultSchema("auth");
-
-        //builder.Entity<AppRole>().HasMany(au => au.AppUsers).WithOne().HasForeignKey(au => au.RoleId);
+        builder.Entity<AppUser>().ToTable("AppUser");
     }
 }
