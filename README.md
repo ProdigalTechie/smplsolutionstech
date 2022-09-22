@@ -1,9 +1,23 @@
 # smplsolutionstech
-A community-driven SaaS that generates code files to help people learn to code and speed up any development project.
+A community-driven SaaS to make the future of development Smpl! Users will have access to generate projects and files that are templated to the best practices of both previous and current programming languages. SmplSolutionsTech is here to be a solution to enter information once an get the templated resources you need to accelerate your project. We are a launching pad for your developer journey and any and all are welcome to help contribute!
 
-To contribute fork or clone the checkout repository: https://github.com/ProdigalTechie/smplsolutionstech
+## How can you contribute?
+### Current HTML/CSS pages that needs some love:
+#### Privacy.cshtml page
+##### Details
+The privacy page is in desperate need of someone to format the wall of text into a clean HTML page with maybe a splash of CSS. You should be able to work and load this page in your browser without having to build the project.
 
-To contribute to this project off here are some prerequisites you’ll want to have:
+##### Paths
+Privacy.cshtml is located in SmplSolutionsTech/Pages/Home/Privacy.html
+privacy.css is located in SmplSolutionsTech/wwwroot/css/privacy.css
+
+##### Questions
+If there are any questions please reach out to me on github: https://github.com/ProdigalTechie or create an issue in the repo: https://github.com/ProdigalTechie/smplsolutionstech/issues.
+
+## How to run the project locally?
+To contribute fork or clone the ***checkout*** repository: https://github.com/ProdigalTechie/smplsolutionstech
+
+Some prerequisites you’ll want to have (not required to contribute but would be usefull):
 
 1) Install Visual Studio 2022 (Community is free) https://visualstudio.microsoft.com/downloads/  or VSCode https://code.visualstudio.com/download 
 2) Install .NET 6.0.4 SDK and Runtime 6.0.9 https://dotnet.microsoft.com/en-us/download/dotnet/6.0 
@@ -21,3 +35,6 @@ For Windows Users:
 
 For Mac and Linus Users:
 1) Please consult online resources for how to perform this
+
+## Notice
+This project is open-source for development and contributing purposes only. Any replication or reproduction of this project is prohibited.
