@@ -72,10 +72,10 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendMessageWithoutReplyToAsync(
+                await _emailSender.SendHtmlMessageWithoutReplyToAsync(
                     Input.Email,
                     "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
