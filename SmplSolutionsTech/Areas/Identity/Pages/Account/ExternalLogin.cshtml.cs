@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SmplSolutionsTech.Models.Identity;
+using SmplSolutionsTech.Helpers.Classes;
 
 namespace SmplSolutionsTech.Areas.Identity.Pages.Account
 {
@@ -28,7 +29,7 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly IUserStore<AppUser> _userStore;
         private readonly IUserEmailStore<AppUser> _emailStore;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailHelper _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
@@ -36,7 +37,7 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
             UserManager<AppUser> userManager,
             IUserStore<AppUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailHelper emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -174,7 +175,7 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        await _emailSender.SendMessageWithoutReplyToAsync(Input.Email, "Confirm your email",
                             $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender

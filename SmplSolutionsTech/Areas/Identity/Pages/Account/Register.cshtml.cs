@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SmplSolutionsTech.Helpers.Classes;
 using SmplSolutionsTech.Helpers.Enums;
 using SmplSolutionsTech.Models.Identity;
 
@@ -30,14 +31,14 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
         private readonly IUserStore<AppUser> _userStore;
         private readonly IUserEmailStore<AppUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailHelper _emailSender;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             IUserStore<AppUser> userStore,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailHelper emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -140,8 +141,8 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendMessageWithoutReplyToAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.", true);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

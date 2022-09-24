@@ -4,8 +4,8 @@ obj/
 appsettings.json
 
 Keys/
-
 Migrations/
+.config/
 
 
 ## From Stack Overflow user Bravo Yeung to ignore Visual Studio files

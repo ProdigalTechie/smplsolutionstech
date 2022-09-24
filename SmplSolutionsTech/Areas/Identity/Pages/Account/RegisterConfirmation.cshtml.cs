@@ -2,16 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using SmplSolutionsTech.Helpers.Classes;
 using SmplSolutionsTech.Models.Identity;
+using System.Text;
 
 namespace SmplSolutionsTech.Areas.Identity.Pages.Account
 {
@@ -19,12 +17,16 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IEmailSender _sender;
+        private readonly IEmailHelper _emailHelper;
+        private readonly IHostEnvironment _env;
+        private readonly ILogger<RegisterConfirmationModel> _logger;
 
-        public RegisterConfirmationModel(UserManager<AppUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<AppUser> userManager, IEmailHelper emailHelper, IHostEnvironment env, ILogger<RegisterConfirmationModel> logger)
         {
             _userManager = userManager;
-            _sender = sender;
+            _emailHelper = emailHelper;
+            _env = env;
+            _logger = logger;
         }
 
         /// <summary>
@@ -60,9 +62,10 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
             }
 
             Email = email;
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
-            DisplayConfirmAccountLink = true;
-            if (DisplayConfirmAccountLink)
+
+            // For open-source dev purposes email sender is disabled display alternative page.
+            DisplayConfirmAccountLink = false;
+            if(DisplayConfirmAccountLink)
             {
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -73,7 +76,9 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
                     values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                     protocol: Request.Scheme);
             }
-
+                
+            //}
+           
             return Page();
         }
     }

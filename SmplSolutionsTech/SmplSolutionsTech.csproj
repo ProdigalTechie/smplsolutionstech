@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\Extentions\" />
+    <Folder Include="Logic\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

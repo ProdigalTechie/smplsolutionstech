@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using SmplSolutionsTech.Helpers.Classes;
 using SmplSolutionsTech.Models.Identity;
 
 namespace SmplSolutionsTech.Areas.Identity.Pages.Account.Manage
@@ -20,12 +21,12 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailHelper _emailSender;
 
         public EmailModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IEmailSender emailSender)
+            IEmailHelper emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -124,7 +125,7 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
+                await _emailSender.SendMessageWithoutReplyToAsync(
                     Input.NewEmail,
                     "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -160,7 +161,7 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
+            await _emailSender.SendMessageWithoutReplyToAsync(
                 email,
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

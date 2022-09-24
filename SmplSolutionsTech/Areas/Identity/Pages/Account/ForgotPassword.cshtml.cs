@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using SmplSolutionsTech.Helpers.Classes;
 using SmplSolutionsTech.Models.Identity;
 
 namespace SmplSolutionsTech.Areas.Identity.Pages.Account
@@ -20,9 +21,9 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailHelper _emailSender;
 
-        public ForgotPasswordModel(UserManager<AppUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<AppUser> userManager, IEmailHelper emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -71,7 +72,7 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
+                await _emailSender.SendMessageWithoutReplyToAsync(
                     Input.Email,
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
