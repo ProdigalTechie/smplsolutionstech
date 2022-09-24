@@ -36,7 +36,7 @@ namespace SmplSolutionsTech.Controllers
         [HttpPost]
         public async Task<IActionResult> SendEmail()
         {
-            await _emailHelper.SendMessageWithoutReplyToAsync("buss.kyle@gmail.com", "Hello World!", "This is an email from SmplSolutionsTech!");
+            await _emailHelper.SendHtmlMessageWithoutReplyToAsync("buss.kyle@gmail.com", "Hello World!", "This is an email from SmplSolutionsTech!");
             return RedirectToAction("Index");
         }
     }

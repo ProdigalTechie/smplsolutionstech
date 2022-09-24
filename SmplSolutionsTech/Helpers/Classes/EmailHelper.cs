@@ -23,7 +23,7 @@ namespace SmplSolutionsTech.Helpers.Classes
             _logger = logger;
         }
 
-        public async Task<bool> SendMessageWithoutReplyToAsync(string recipient, string subject, string body, bool htmlContent = false, List<Attachment> attachments = null)
+        public async Task<bool> SendHtmlMessageWithoutReplyToAsync(string recipient, string subject, string body, bool htmlContent = true, List<Attachment> attachments = null)
         {
             return await SendMessageAsync(new List<string> { recipient }, null, subject, body, htmlContent, attachments);
         }
