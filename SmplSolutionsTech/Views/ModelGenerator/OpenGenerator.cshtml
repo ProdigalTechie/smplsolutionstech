@@ -1,0 +1,49 @@
+﻿@using SmplSolutionsTech.Models.App
+@using SmplSolutionsTech.Helpers.Classes
+@using SmplSolutionsTech.Helpers.Enums
+@model CodeGeneratorForm
+@{
+    ViewData["Title"] = "Open Generator";
+    var languages = EnumHelper.GetSelectList(typeof(Languages));
+}
+
+@using (Html.BeginForm("OpenGeneratorCreate", "ModelGenerator", FormMethod.Post))
+{
+    // TODO add form controls
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="ModelName" class="form-label"></label>
+                    <input asp-for="ModelName" class="form-control" autocomplete="modelname" aria-required="true"/>
+                    <span asp-validation-for="ModelName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col">&nbsp;</div>
+            <div class="col">&nbsp;</div>
+            <div class="col">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col">
+                    <label asp-for="Language" class="form-label"></label>
+                    <select asp-for="Language" class="form-select">
+                        @for (var i = 0; i < languages.Count(); i++)
+                        {
+                            <option value="@languages[i].Value">@languages[i].Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="col">&nbsp;</div>
+                <div class="col">&nbsp;</div>
+                <div class="col">&nbsp;</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">&nbsp;</div>
+            <div class="col">&nbsp;</div>
+            <div class="col">&nbsp;</div>
+            <div class="col">
+                <button class="btn btn-primary float-end" type="submit" onclick="">Submit</button>
+            </div>
+        </div>
+}

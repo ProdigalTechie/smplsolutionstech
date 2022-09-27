@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using SmplSolutionsTech.Helpers.Classes
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SmplSolutionsTech</title>
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SmplSolutionsTech.styles.css" asp-append-version="true" />
@@ -30,6 +30,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User.HasMidDevAccess())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ModelGenerator" asp-action="OpenGenerator">Code Generator</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <partial name="_LoginPartial"/>

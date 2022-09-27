@@ -3,6 +3,7 @@
     public class Config
     {
         public EmailSettings EmailSettings { get; set; }
+        public string SendGridKey { get; set; }
     }
 
     public class EmailSettings

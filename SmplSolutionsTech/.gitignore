@@ -6,6 +6,7 @@ appsettings.json
 Keys/
 Migrations/
 .config/
+Logs/*.*
 
 
 ## From Stack Overflow user Bravo Yeung to ignore Visual Studio files
