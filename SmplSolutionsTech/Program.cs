@@ -1,9 +1,14 @@
 using Microsoft.Extensions.Options;
+using Serilog;
+using Serilog.Formatting.Json;
 using SmplSolutionsTech;
 using SmplSolutionsTech.Extentions;
 using SmplSolutionsTech.Helpers.Classes;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
 
 builder.Services.AddIdentityServices(builder.Configuration);
 
@@ -12,12 +17,15 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<Config>(builder.Configuration.GetSection("Config"));
 builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<Config>>().Value);
 
-
+builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<IEmailHelper, EmailHelper>();
+
+builder.Services.AddLogicServices(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

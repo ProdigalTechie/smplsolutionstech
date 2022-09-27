@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using SmplSolutionsTech.Models.Identity;
 
-namespace Common.Extensions
+namespace SmplSolutionsTech.Extentions
 {
 	public class SignInManagerExt : SignInManager<AppUser>
 	{

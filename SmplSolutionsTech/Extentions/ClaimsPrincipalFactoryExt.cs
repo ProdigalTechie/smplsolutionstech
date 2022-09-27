@@ -4,7 +4,7 @@ using SmplSolutionsTech.Helpers.Enums;
 using SmplSolutionsTech.Models.Identity;
 using System.Security.Claims;
 
-namespace Common.Extensions
+namespace SmplSolutionsTech.Extentions
 {
 	public class ClaimsPrincipalFactoryExt : UserClaimsPrincipalFactory<AppUser>
 	{

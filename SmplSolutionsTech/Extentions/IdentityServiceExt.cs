@@ -1,9 +1,6 @@
-﻿using Common.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.DataProtection;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using SmplSolutionsTech.Authorization;
 using SmplSolutionsTech.Data.Identity;
 using SmplSolutionsTech.Helpers.Classes;
