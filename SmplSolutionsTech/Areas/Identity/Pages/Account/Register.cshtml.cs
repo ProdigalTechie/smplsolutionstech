@@ -122,7 +122,7 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.AppRoleId = (int)AppRoles.JrDev;
+                user.AppRoleId = (int)AppRolesEnum.JrDev;
 
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

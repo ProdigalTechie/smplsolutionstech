@@ -1,49 +1,157 @@
 ﻿@using SmplSolutionsTech.Models.App
 @using SmplSolutionsTech.Helpers.Classes
 @using SmplSolutionsTech.Helpers.Enums
-@model CodeGeneratorForm
+@model OpenCodeGeneratorForm
 @{
     ViewData["Title"] = "Open Generator";
-    var languages = EnumHelper.GetSelectList(typeof(Languages));
+    var languages = EnumHelper.GetSelectList(typeof(OpenGeneratorLanguagesEnum));
+    var csharpDataTypes = EnumHelper.GetSelectList(typeof(CSharpDataTypesEnum));
+    var sqlDataTypes = EnumHelper.GetSelectList(typeof(SqlDataTypesEnum));
+    var propertyModifiers = EnumHelper.GetSelectList(typeof(AccessModifierEnum));
 }
+<script>
+    //https://www.w3schools.com/jquery/event_ready.asp
+    $(document).ready(function(){
+        // global variable to track property items
+        counter = 0;
+    });
+    function addRow() {
+        var cSharp = JSON.parse('@Html.Raw(Json.Serialize(csharpDataTypes.OrderBy(x => x.Value)))');
+        var sql = JSON.parse('@Html.Raw(Json.Serialize(sqlDataTypes.OrderBy(x => x.Value)))');
+        //var propertyMods = @Html.Encode(propertyModifiers);
+        var table = document.getElementById("addPropertiesTable");
+        var row = table.insertRow(-1);
+        //// TODO add C# or SQL DataTypeSelectList
+        var dataTypeSelectList = row.insertCell(0);
+        var cSharpOptions = "";
+
+        //https://stackoverflow.com/questions/18470702/how-do-i-convert-a-c-sharp-liststring-to-a-javascript-array
+        //https://stackoverflow.com/questions/50056518/ijsonhelper-does-not-contain-a-definition-for-encode
+        //https://stackoverflow.com/questions/66031714/form-for-a-model-that-contains-a-list-property-in-asp-net-core-3-mvc
+        for (var i = 0; i < cSharp.length; i++) {
+            if (i === 0) {
+                cSharpOptions += '<option value="' + Number(cSharp[i].value) + '" selected >' + cSharp[i].text + '</option>';
+            } else {
+                cSharpOptions += '<option value="' + Number(cSharp[i].value) + '" >' + cSharp[i].text + '</option>';
+            }
+        }
+
+        dataTypeSelectList.innerHTML = '<select asp-for="Properties[' + counter + '].CSharpDataTypeId" class="form-select">'
+        +
+                cSharpOptions
+        + '</select>';
+
+        var dataTypeSelectList1 = row.insertCell(1);
+        var sqlOptions = "";
+        for (var i = 0; i < sql.length; i++) {
+            if (i === 0) {
+                sqlOptions += '<option value="' + Number(sql[i].value) + '" selected >' + sql[i].text + '</option>';
+            } else {
+                sqlOptions += '<option value="' + Number(sql[i].value) + '" >' + sql[i].text + '</option>';
+            }
+        }
+
+        dataTypeSelectList1.innerHTML = '<select asp-for="Properties[' + counter + '].SqlDataTypeId" class="form-select">'
+            +
+            sqlOptions
+            + '</select>';
+        // TODO add Custom Property Name if Custom selected
+        // if
+        // TODO add Domain Access if C# selected
+        
+        // TODO add Property Name
+        
+        // TODO add Nullable switch
+
+        counter++;
+    }
+    function toggleLanguage() {
+        
+    }
+</script>
 
 @using (Html.BeginForm("OpenGeneratorCreate", "ModelGenerator", FormMethod.Post))
 {
-    // TODO add form controls
     <div class="container">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label asp-for="ModelName" class="form-label"></label>
-                    <input asp-for="ModelName" class="form-control" autocomplete="modelname" aria-required="true"/>
-                    <span asp-validation-for="ModelName" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col">&nbsp;</div>
-            <div class="col">&nbsp;</div>
-            <div class="col">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col">
-                    <label asp-for="Language" class="form-label"></label>
-                    <select asp-for="Language" class="form-select">
-                        @for (var i = 0; i < languages.Count(); i++)
+                    <label asp-for="Language" class="form-label font-weight-bold"></label>
+                    <select asp-for="Language" class="form-select" onchange="toggleLanguage()">
+                        @foreach (var language in languages)
                         {
-                            <option value="@languages[i].Value">@languages[i].Text</option>
+                            <option value="@language.Value">@language.Text</option>
                         }
                     </select>
                 </div>
-                <div class="col">&nbsp;</div>
-                <div class="col">&nbsp;</div>
-                <div class="col">&nbsp;</div>
             </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="ModelName" class="form-label font-weight-bold"></label>
+                    <input asp-for="ModelName" class="form-control" autocomplete="modelname" aria-required="true" />
+                    <span asp-validation-for="ModelName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label asp-for="InheritsFrom" class="form-label font-weight-bold"></label>
+                    <input asp-for="InheritsFrom" class="form-control" autocomplete="inheritsfrom" aria-required="true" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check form-switch">
+                    <label asp-for="IsInterface" class="form-check-label font-weight-bold" for="isInterfaceSwitch"></label>
+                    <br />
+                    <div class="large-switch">
+                        <input asp-for="IsInterface" class="form-check-input" type="checkbox" role="switch" id="isInterfaceSwitch">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <table class="mx-lg-3" id="addPropertiesTable" align="center">
+                        <thead>
+                            <tr>
+                                <td colspan="4">
+                                    <button onclick="addRow()" type="button" class="btn btn-outline-primary">Add Property</button>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th class="mx-2 width-20vw">
+                                <label asp-for="Properties[0].CSharpDataTypeId" class="form-label mx-2"></label>
+                            </th>
+                            <th class="mx-2 width-20vw">
+                                <label asp-for="Properties[0].SqlDataTypeId" class="form-label mx-2"></label>
+                            </th>
+                            <th class="mx-2 width-20vw">
+                                <label asp-for="Properties[0].DomainAccess" class="form-label mx-2"></label>
+                            </th>
+                            <th class="mx-2 width-20vw">
+                                    <label asp-for="Properties[0].DataTypeName" class="form-label mx-2"></label>
+                            </th>
+                            <th class="mx-2 width-20vw">
+                                    <label asp-for="Properties[0].Name" class="form-label mx-2"></label>
+                            </th >
+                            <th class ="mx-2 width-20vw">
+                                    <label asp-for="Properties[0].IsNullable" class="form-label mx-2"></label>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="row">
             <div class="col">&nbsp;</div>
             <div class="col">&nbsp;</div>
             <div class="col">&nbsp;</div>
             <div class="col">
-                <button class="btn btn-primary float-end" type="submit" onclick="">Submit</button>
+                <button class="btn btn-primary" type="submit" onclick="">Submit</button>
             </div>
         </div>
 }

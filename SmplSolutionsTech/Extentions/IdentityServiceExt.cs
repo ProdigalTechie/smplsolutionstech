@@ -72,10 +72,10 @@ namespace SmplSolutionsTech.Extentions
 
             builder.AddAuthorization(options =>
             {
-                options.AddPolicy(nameof(AuthorizationPolicies.Admin), policy => policy.Requirements.Add(new AdminRequirement()));
-                options.AddPolicy(nameof(AuthorizationPolicies.SrDev), policy => policy.Requirements.Add(new SrDevRequirement()));
-                options.AddPolicy(nameof(AuthorizationPolicies.MidDev), policy => policy.Requirements.Add(new MidDevRequirement()));
-                options.AddPolicy(nameof(AuthorizationPolicies.JrDev), policy => policy.Requirements.Add(new JrDevRequirement()));
+                options.AddPolicy(nameof(AuthorizationPoliciesEnum.Admin), policy => policy.Requirements.Add(new AdminRequirement()));
+                options.AddPolicy(nameof(AuthorizationPoliciesEnum.SrDev), policy => policy.Requirements.Add(new SrDevRequirement()));
+                options.AddPolicy(nameof(AuthorizationPoliciesEnum.MidDev), policy => policy.Requirements.Add(new MidDevRequirement()));
+                options.AddPolicy(nameof(AuthorizationPoliciesEnum.JrDev), policy => policy.Requirements.Add(new JrDevRequirement()));
             });
 
             builder.AddSingleton<IAuthorizationHandler, AdminHandler>();

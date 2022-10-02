@@ -1,6 +1,6 @@
 ﻿namespace SmplSolutionsTech.Helpers.Enums
 {
-    public enum AuthorizationPolicies
+    public enum AuthorizationPoliciesEnum
     {
         Admin,
         SrDev,

@@ -4,9 +4,9 @@ namespace SmplSolutionsTech.Logic
 {
     public class GeneratorLogic : IGeneratorLogic
     {
-        public async Task<CodeGeneratorForm> GetOpenGeneratorModel()
+        public async Task<OpenCodeGeneratorForm> GetOpenGeneratorModel()
         {
-            return new CodeGeneratorForm();
+            return new OpenCodeGeneratorForm();
         }
     }
 }
