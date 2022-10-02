@@ -7,22 +7,28 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+    <li class="nav-item mx-2">
+        <form id="manageForm" class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <button id="profile" type="submit" class="btn btn-primary text-light">Profile</button>
+        </form>
     </li>
-    <li class="nav-item">
+    <li class="nav-item  mx-2">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <button id="logout" type="submit" class="btn btn-outline-primary text-dark">Logout</button>
         </form>
     </li>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <li class="nav-item  mx-2">
+        <form id="registerForm" class="form-inline" asp-area="Identity" asp-page="/Account/Register">
+            <button id="register" type="submit" class="btn btn-outline-primary text-dark">Register</button>
+        </form>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    <li class="nav-item mx-2">
+        <form class="form-inline" id="loginForm" asp-area="Identity" asp-page="/Account/Login">
+                <button id="login" type="submit" class="btn btn-primary text-light">Login</button>
+        </form>
     </li>
 }
 </ul>

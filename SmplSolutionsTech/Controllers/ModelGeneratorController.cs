@@ -7,7 +7,7 @@ using SmplSolutionsTech.Models.App;
 
 namespace SmplSolutionsTech.Controllers
 {
-    [Authorize(Policy = nameof(AuthorizationPolicies.MidDev))]
+    [Authorize(Policy = nameof(AuthorizationPoliciesEnum.MidDev))]
     public class ModelGeneratorController : Controller
     {
         private readonly Config _config;
@@ -37,7 +37,7 @@ namespace SmplSolutionsTech.Controllers
             }
         }
         [HttpPost("OpenGeneratorCreate")]
-        public async Task<bool> OpenGeneratorCreate(CodeGeneratorForm model)
+        public async Task<bool> OpenGeneratorCreate(OpenCodeGeneratorForm model)
         {
             //TODO Create the file and return it to user.
 

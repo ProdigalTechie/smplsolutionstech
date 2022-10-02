@@ -1,0 +1,83 @@
+﻿@*@using SmplSolutionsTech.Models.App
+@model ModelGeneratorModel
+@{
+    var guid = Guid.NewGuid().ToString().Replace("-", "");
+    var divId = $"generatorDiv_{guid}";
+    var loadingId = $"loading_{guid}";
+    var dateId = $"generatorDate_{guid}";
+    var readingId = $"generatorReading_{guid}";
+    var commentId = $"generatorComment";
+    var readingHiddenId = $"generatorReadingHiddenId_{guid}";
+    var readingHiddenCreatedBy = $"generatorReadingHiddenCreatedBy_{guid}";
+    var readingHiddenCreatedOn = $"generatorReadingHiddenCreatedOn_{guid}";
+    var saveId = $"save_{guid}";
+    var deleteId = $"delete_{guid}";
+    var successFunc = $"successFunc_{guid}";
+    var changeFunc = $"changeFunc_{guid}";
+    var deleteFunc = $"deleteFunc_{guid}";
+}
+<script>
+    function @(successFunc)(response) {
+        if ('@Model.Id' <= 0 && !(response.modelerror || response.error)) {
+            $('#@divId').parents('[id^="generatorDiv_"]').replaceWith(response.view);
+            // remove the comment from the save record row
+            var originalComment = $('#generatorComment')[0];
+            originalComment.value = "";
+        } else {
+            $('#@divId').replaceWith(response.view);
+        }
+    }
+
+    function @(changeFunc)() {
+        if ($('#@dateId').data('kendoDatePicker').value() === new Date('@Model.Date').toString() && $('#@readingId').data('kendoNumericTextBox').value() === '@Model.Hours') {
+            $('#@saveId').data('kendoButton').enable(false);
+        } else {
+            $('#@saveId').data('kendoButton').enable(true);
+        }
+    }
+
+    function @(deleteFunc)() {
+        kendo.confirm('@CommonResource.AreYouSureYouWantToDelete')
+            .done(function () {
+                $.ajax({
+                    method: 'GET',
+                    url: '@Url.Action("DeleteGeneratorReading", "Environment", new {id = Model.Id, facilityId = Model.FacilityId})',
+                    success: function () {
+                        $('#@divId').parent().remove();
+                    },
+                    error: function (response) {
+                        messageBox(response.error, '@CommonResource.Error');
+                    }
+                });
+            });
+    }
+</script>
+
+<form data-ajax-url="@Url.Action("AddPropertyToModel", "ModelGenerator")" data-ajax="true" data-ajax-method="POST" data-ajax-success="@successFunc" data-ajax-loading="#@loadingId">
+    <div style="width: 50px; float: left; padding: 2px;">
+        @if (Model.Id > 0)
+        {
+            @(Html.Kendo().Button().Name(deleteId).Icon("delete").Tag("a").Events(x => x.Click(deleteFunc)).HtmlAttributes(new { @class = "btn-delete", title = CommonResource.Delete }))
+        }
+    </div>
+    <div style="width: 125px; float: left; padding: 2px;">
+        @(Html.Kendo().DatePickerFor(x => x.Date).Min($"{minDate}").Max($"{minDate.AddMonths(1).AddDays(-1)}")
+            .Events(e => e.Change(changeFunc))
+            .HtmlAttributes(new { id = dateId, style = "width: 100%" }))
+    </div>
+    <div style="width: 125px; float: left; padding: 2px;">
+        @(Html.Kendo().TextBoxFor(x => x.Comment)
+            .HtmlAttributes(new { id = commentId, style = "width: 100%" }))
+    </div>
+    <div style="width: 125px; float: left; padding: 2px;">
+        @(Html.Kendo().NumericTextBoxFor(x => x.Hours).Decimals(1).Format("#.0").Min(0).Step((decimal)0.1).Value(Model.Hours)
+            .Events(e => e.Change(changeFunc))
+            .HtmlAttributes(new { id = readingId, style = "width: 100%" }))
+    </div>
+    <div style="width: 140px; float: left; padding: 2px;">
+        @(Html.Kendo().Button().Name(saveId).Content(Model.Id > 0 ? CommonResource.Save : CommonResource.SaveNewRecord).Enable(Model.Id <= 0).HtmlAttributes(new { type = "submit", style = "width: 100%" }))
+    </div>
+    <div class="clearfix"></div>
+    <div asp-validation-summary="All"></div>
+
+</form>*@

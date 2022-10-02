@@ -1,6 +1,6 @@
 ﻿namespace SmplSolutionsTech.Helpers.Enums
 {
-    public enum DataTypesEnum
+    public enum CSharpDataTypesEnum
     {
         Custom = 0,
         Byte = 1,
@@ -16,7 +16,7 @@
         Decimal = 11,
         Char = 12,
         Bool = 13,
-        Object = 14,
+        //Object = 14,
         String = 15,
         DateTime = 16
     }

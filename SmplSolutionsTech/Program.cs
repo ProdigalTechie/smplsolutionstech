@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Options;
 using Serilog;
-using Serilog.Formatting.Json;
 using SmplSolutionsTech;
 using SmplSolutionsTech.Extentions;
 using SmplSolutionsTech.Helpers.Classes;

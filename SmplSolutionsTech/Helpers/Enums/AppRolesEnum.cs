@@ -1,6 +1,6 @@
 ﻿namespace SmplSolutionsTech.Helpers.Enums
 {
-    public enum AppRoles
+    public enum AppRolesEnum
     {
         JrDev = 1,
         MidDev = 2,

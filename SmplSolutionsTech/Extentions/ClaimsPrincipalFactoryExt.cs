@@ -18,7 +18,7 @@ namespace SmplSolutionsTech.Extentions
 
 			claims.AddClaim(new Claim(ClaimTypes.Sid, $"{user.Id ?? user.Id}"));
 			claims.AddClaim(new Claim(ClaimTypes.Name, $"{user.UserName}"));
-			claims.AddClaim(new Claim(ClaimTypes.Role, $"{(AppRoles)user.AppRoleId}"));
+			claims.AddClaim(new Claim(ClaimTypes.Role, $"{(AppRolesEnum)user.AppRoleId}"));
 
 			return claims;
 		}

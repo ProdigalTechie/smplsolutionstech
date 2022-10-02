@@ -12,7 +12,7 @@ using SmplSolutionsTech.Models.Identity;
 
 namespace SmplSolutionsTech.Areas.Identity.Pages.Account.Manage
 {
-    [Authorize(Policy = nameof(AuthorizationPolicies.JrDev))]
+    [Authorize(Policy = nameof(AuthorizationPoliciesEnum.JrDev))]
     public class IndexModel : PageModel
     {
         private readonly UserManager<AppUser> _userManager;

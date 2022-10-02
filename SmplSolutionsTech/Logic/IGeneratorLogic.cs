@@ -4,6 +4,6 @@ namespace SmplSolutionsTech.Logic
 {
     public interface IGeneratorLogic
     {
-        public Task<CodeGeneratorForm> GetOpenGeneratorModel();
+        public Task<OpenCodeGeneratorForm> GetOpenGeneratorModel();
     }
 }

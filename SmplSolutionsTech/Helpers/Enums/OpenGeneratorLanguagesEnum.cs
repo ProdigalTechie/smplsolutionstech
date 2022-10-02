@@ -5,7 +5,7 @@ using SmplSolutionsTech.Resources;
 
 namespace SmplSolutionsTech.Helpers.Enums
 {
-    public enum Languages
+    public enum OpenGeneratorLanguagesEnum
     {
         [Display(ResourceType = typeof(CodeGeneratorResource), Name = nameof(CodeGeneratorResource.CSharp))]
         CSharp = 0,

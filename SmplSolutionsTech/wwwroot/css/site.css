@@ -16,3 +16,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.width-20vw {
+    width: calc(100vw / 5);
+}
+/*  */
+.large-switch {
+    font-size: 32px;
+    padding: .2rem 2.25rem .375rem 5rem;
+}
+
+#profile, #logout, #register, #login {
+    min-width: 6rem;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
