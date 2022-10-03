@@ -8,8 +8,6 @@ Migrations/
 .config/
 Logs/*.*
 
-PayPal/
-
 
 ## From Stack Overflow user Bravo Yeung to ignore Visual Studio files
 ## Ignore Visual Studio temporary files, build results, and
