@@ -1,5 +1,5 @@
 # smplsolutionstech
-A community-driven SaaS to make the future of development Smpl! Users will have access to generate projects and files that are templated to the best practices of both previous and current programming languages. SmplSolutionsTech is here to be a solution to enter information once an get the templated resources you need to accelerate your project. We are a launching pad for your developer journey and any and all are welcome to help contribute!
+A community-driven Solutions as a Service to make the future of development Smpl! Users will have access to generate projects and files that are templated to the best practices of both previous and current programming languages. SmplSolutionsTech is here to be a solution to enter information once an get the templated resources you need to accelerate your project. We are a launching pad for your developer journey and any and all are welcome to help contribute!
 
 ## How can you contribute?
 ### Current HTML/CSS pages that needs some love:
