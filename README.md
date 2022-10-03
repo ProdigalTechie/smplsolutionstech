@@ -27,8 +27,7 @@ Some prerequisites you’ll want to have (not required to contribute but would b
 6) dotnet ef migrations add InitialCreate then dotnet ef database update (this creates a new migration and the database with the Identity tables)
 7) Verify the database created an auth.AppUser table (if there is an auth.AppNetUsers table rename it to auth.AppUser)
 8) insert into auth.AppRole ('RoleName') values ('Jr. Dev') using SQL script from VS 2022 or SSMS
-9) Navigate to Areas/Identity/Pages/Account and open the Register.cshtml and Login.cshtml and comment out the @await Component.InvokeAsync("PayPal") line.
-10) Register a new user then update the user EmailConfirmed column in the auth.AppUser table via SQL.
+9) Register a new user then update the user EmailConfirmed column in the auth.AppUser table via SQL.
 
 For Windows Users:
 1) Click on the Start Menu and type Environment Variables
