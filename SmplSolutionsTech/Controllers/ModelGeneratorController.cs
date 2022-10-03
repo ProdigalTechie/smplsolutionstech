@@ -7,7 +7,7 @@ using SmplSolutionsTech.Models.App;
 
 namespace SmplSolutionsTech.Controllers
 {
-    [Authorize(Policy = nameof(AuthorizationPoliciesEnum.MidDev))]
+    //[Authorize(Policy = nameof(AuthorizationPoliciesEnum.MidDev))]
     public class ModelGeneratorController : Controller
     {
         private readonly Config _config;

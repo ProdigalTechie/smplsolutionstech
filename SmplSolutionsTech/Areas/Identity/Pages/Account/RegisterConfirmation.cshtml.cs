@@ -63,9 +63,11 @@ namespace SmplSolutionsTech.Areas.Identity.Pages.Account
 
             Email = email;
 
-            // For open-source dev purposes email sender is disabled display alternative page.
-            DisplayConfirmAccountLink = false;
-            if(DisplayConfirmAccountLink)
+            // For open-source dev purposes email sender is disabled display alternative page
+            if (_env.IsProduction()) DisplayConfirmAccountLink = false;
+            if(_env.IsDevelopment()) DisplayConfirmAccountLink = true;
+
+            if (DisplayConfirmAccountLink)
             {
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

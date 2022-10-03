@@ -26,6 +26,11 @@ body {
     padding: .2rem 2.25rem .375rem 5rem;
 }
 
+.null-checkbox {
+    font-size: 2.25rem;
+    margin: 1rem 1.5rem .5rem;
+}
+
 #profile, #logout, #register, #login {
     min-width: 6rem;
 }

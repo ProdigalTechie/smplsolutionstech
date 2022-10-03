@@ -14,59 +14,94 @@
     $(document).ready(function(){
         // global variable to track property items
         counter = 0;
+        languageId = 0; // default to C#
+        $("#sqlTypeId").hide();
+        $("#cSharpTypeId").show();
     });
+    
     function addRow() {
+        $("#language")[0].disabled = true;
         var cSharp = JSON.parse('@Html.Raw(Json.Serialize(csharpDataTypes.OrderBy(x => x.Value)))');
         var sql = JSON.parse('@Html.Raw(Json.Serialize(sqlDataTypes.OrderBy(x => x.Value)))');
-        //var propertyMods = @Html.Encode(propertyModifiers);
+        var propertyAccess = JSON.parse('@Html.Raw(Json.Serialize(propertyModifiers.OrderBy(x => x.Value)))');
         var table = document.getElementById("addPropertiesTable");
         var row = table.insertRow(-1);
-        //// TODO add C# or SQL DataTypeSelectList
-        var dataTypeSelectList = row.insertCell(0);
-        var cSharpOptions = "";
-
-        //https://stackoverflow.com/questions/18470702/how-do-i-convert-a-c-sharp-liststring-to-a-javascript-array
-        //https://stackoverflow.com/questions/50056518/ijsonhelper-does-not-contain-a-definition-for-encode
-        //https://stackoverflow.com/questions/66031714/form-for-a-model-that-contains-a-list-property-in-asp-net-core-3-mvc
-        for (var i = 0; i < cSharp.length; i++) {
-            if (i === 0) {
-                cSharpOptions += '<option value="' + Number(cSharp[i].value) + '" selected >' + cSharp[i].text + '</option>';
-            } else {
-                cSharpOptions += '<option value="' + Number(cSharp[i].value) + '" >' + cSharp[i].text + '</option>';
+        var accessSelectList = languageId === 0 ? row.insertCell(0) : null;
+        if(accessSelectList !== null) {
+            var accessOptions = "";
+            for (var i = 0; i < propertyAccess.length; i++) {
+                if (i === 0) {
+                    accessOptions += '<option value="' + Number(propertyAccess[i].value) + '" selected >' + propertyAccess[i].text + '</option>';
+                } else {
+                    accessOptions += '<option value="' + Number(propertyAccess[i].value) + '" >' + propertyAccess[i].text + '</option>';
+                }
             }
-        }
-
-        dataTypeSelectList.innerHTML = '<select asp-for="Properties[' + counter + '].CSharpDataTypeId" class="form-select">'
-        +
-                cSharpOptions
-        + '</select>';
-
-        var dataTypeSelectList1 = row.insertCell(1);
-        var sqlOptions = "";
-        for (var i = 0; i < sql.length; i++) {
-            if (i === 0) {
-                sqlOptions += '<option value="' + Number(sql[i].value) + '" selected >' + sql[i].text + '</option>';
-            } else {
-                sqlOptions += '<option value="' + Number(sql[i].value) + '" >' + sql[i].text + '</option>';
-            }
-        }
-
-        dataTypeSelectList1.innerHTML = '<select asp-for="Properties[' + counter + '].SqlDataTypeId" class="form-select">'
+            accessSelectList.innerHTML = '<select asp-for="Properties[' + counter + '].DomainAccess" class="form-select">'
             +
-            sqlOptions
+                accessOptions
             + '</select>';
-        // TODO add Custom Property Name if Custom selected
-        // if
-        // TODO add Domain Access if C# selected
+        }
+        var dataTypeSelectList = languageId === 0 ? row.insertCell(1) : row.insertCell(0);
+        var dataTypeOptions = "";
+        if(languageId === 0) {
+            //https://stackoverflow.com/questions/18470702/how-do-i-convert-a-c-sharp-liststring-to-a-javascript-array
+            //https://stackoverflow.com/questions/50056518/ijsonhelper-does-not-contain-a-definition-for-encode
+            //https://stackoverflow.com/questions/66031714/form-for-a-model-that-contains-a-list-property-in-asp-net-core-3-mvc
+            for (var i = 0; i < cSharp.length; i++) {
+                if (i === 0) {
+                    dataTypeOptions += '<option value="' + Number(cSharp[i].value) + '" selected >' + cSharp[i].text + '</option>';
+                } else {
+                    dataTypeOptions += '<option value="' + Number(cSharp[i].value) + '" >' + cSharp[i].text + '</option>';
+                }
+            }
+
+            dataTypeSelectList.innerHTML = '<select asp-for="Properties[' + counter + '].CSharpDataTypeId" class="form-select">'
+            +
+                dataTypeOptions
+            + '</select>';
+        } else if (languageId === 1) {
+            for (var i = 0; i < sql.length; i++) {
+                if (i === 0) {
+                    dataTypeOptions += '<option value="' + Number(sql[i].value) + '" selected >' + sql[i].text + '</option>';
+                } else {
+                    dataTypeOptions += '<option value="' + Number(sql[i].value) + '" >' + sql[i].text + '</option>';
+                }
+            }
+
+            dataTypeSelectList.innerHTML = '<select asp-for="Properties[' + counter + '].SqlDataTypeId" class="form-select">'
+                +
+                dataTypeOptions
+                + '</select>';
+        }
         
-        // TODO add Property Name
+        var nameField = languageId === 0 ? row.insertCell(2) : row.insertCell(1);
+        nameField.innerHTML = '<input asp-for="Properties[' + counter + '].Name" class="form-control" autocomplete="modelname" aria-required="true" />';
         
         // TODO add Nullable switch
+        var nullField = languageId === 0 ? row.insertCell(3) : row.insertCell(2);
+        nullField.innerHTML = '<input asp-for="Properties[' + counter + '].IsNullable" class="form-check-input float-left null-checkbox" type="checkbox" role="switch">';
 
         counter++;
     }
     function toggleLanguage() {
-        
+        //https://stackoverflow.com/questions/10659097/jquery-get-selected-option-from-dropdown
+        var language = $("#language").find(":selected").val();
+        languageId = Number(language);
+        // todo disable inherits and interface options if sql selected
+        if (languageId === 1) { // sql
+            $("#inherits")[0].disabled = true;
+            $("#isInterfaceSwitch")[0].disabled = true;
+            $("#cSharpTypeId").hide();
+            $("#domainAccess").hide();
+            $("#sqlTypeId").show();
+        } else { // c#
+            $("#inherits")[0].disabled = false;
+            $("#isInterfaceSwitch")[0].disabled = false;
+            $("#sqlTypeId").hide();
+            $("#cSharpTypeId").show();
+            $("#domainAccess").show();
+
+        }
     }
 </script>
 
@@ -77,7 +112,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label asp-for="Language" class="form-label font-weight-bold"></label>
-                    <select asp-for="Language" class="form-select" onchange="toggleLanguage()">
+                    <select id="language" asp-for="Language" class="form-select" onchange="toggleLanguage()">
                         @foreach (var language in languages)
                         {
                             <option value="@language.Value">@language.Text</option>
@@ -95,7 +130,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label asp-for="InheritsFrom" class="form-label font-weight-bold"></label>
-                    <input asp-for="InheritsFrom" class="form-control" autocomplete="inheritsfrom" aria-required="true" />
+                    <input id="inherits" asp-for="InheritsFrom" class="form-control" autocomplete="inheritsfrom" aria-required="true" />
                 </div>
             </div>
             <div class="col">
@@ -122,22 +157,23 @@
                         <tbody>
                         <tr>
                             <th class="mx-2 width-20vw">
+                                <label id="domainAccess" asp-for="Properties[0].DomainAccess" class="form-label mx-2"></label>
+                            </th>
+                            <th id="cSharpTypeId" class="mx-2 width-20vw">
                                 <label asp-for="Properties[0].CSharpDataTypeId" class="form-label mx-2"></label>
                             </th>
-                            <th class="mx-2 width-20vw">
+                            <th id="sqlTypeId" class="mx-2 width-20vw">
                                 <label asp-for="Properties[0].SqlDataTypeId" class="form-label mx-2"></label>
                             </th>
+
+                            @*<th class="mx-2 width-20vw">
+                                <label asp-for="Properties[0].DataTypeName" class="form-label mx-2"></label>
+                            </th>*@
                             <th class="mx-2 width-20vw">
-                                <label asp-for="Properties[0].DomainAccess" class="form-label mx-2"></label>
-                            </th>
-                            <th class="mx-2 width-20vw">
-                                    <label asp-for="Properties[0].DataTypeName" class="form-label mx-2"></label>
-                            </th>
-                            <th class="mx-2 width-20vw">
-                                    <label asp-for="Properties[0].Name" class="form-label mx-2"></label>
+                                <label asp-for="Properties[0].Name" class="form-label mx-2"></label>
                             </th >
-                            <th class ="mx-2 width-20vw">
-                                    <label asp-for="Properties[0].IsNullable" class="form-label mx-2"></label>
+                            <th class="mx-2 width-20vw">
+                                <label asp-for="Properties[0].IsNullable" class="form-label mx-2"></label>
                             </th>
                         </tr>
                         </tbody>

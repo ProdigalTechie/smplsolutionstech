@@ -28,12 +28,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if (User.HasMidDevAccess())
-                        {
+                       @* @if (User.HasMidDevAccess())
+                        {*@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ModelGenerator" asp-action="OpenGenerator">Code Generator</a>
                             </li>
-                        }
+                        @*}*@
                     </ul>
                 </div>
                 <partial name="_LoginPartial"/>
