@@ -19,11 +19,16 @@ To contribute fork or clone the ***checkout*** repository: https://github.com/Pr
 
 Some prerequisites you’ll want to have (not required to contribute but would be usefull):
 
-1) Install Visual Studio 2022 (Community is free) https://visualstudio.microsoft.com/downloads/  or VSCode https://code.visualstudio.com/download 
+1) Install Visual Studio 2022 (Community is free) https://visualstudio.microsoft.com/downloads/
 2) Install .NET 6.0.4 SDK and Runtime 6.0.9 https://dotnet.microsoft.com/en-us/download/dotnet/6.0 
-3) Install Node.js (for npm install) https://nodejs.org/en/ (NOTE: I’m on version 16.17.0 LTS if you are coding along or contributing I’d recommend being on the same) 
-4) Some experience with Razor Pages
-5) Some experience with the dotnet cli (again total noob here!)
+3) Some experience with Razor Pages
+4) Some experience with the dotnet cli (again total noob here!)
+5) dotnet tools install --global dotnet-ef (from command line while inside the SmplSolutionsTech folder)
+6) dotnet ef migrations add InitialCreate then dotnet ef database update (this creates a new migration and the database with the Identity tables)
+7) Verify the database created an auth.AppUser table (if there is an auth.AppNetUsers table rename it to auth.AppUser)
+8) insert into auth.AppRole ('RoleName') values ('Jr. Dev') using SQL script from VS 2022 or SSMS
+9) Navigate to Areas/Identity/Pages/Account and open the Register.cshtml and Login.cshtml and comment out the @await Component.InvokeAsync("PayPal") line.
+10) Register a new user then update the user EmailConfirmed column in the auth.AppUser table via SQL.
 
 For Windows Users:
 1) Click on the Start Menu and type Environment Variables
